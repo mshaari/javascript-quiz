@@ -6,3 +6,9 @@
 .time {
     text-align: center;
 }
+
+#start {
+    height: 25px; 
+    width:100px; 
+    background-color: cyan
+}
