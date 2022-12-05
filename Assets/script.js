@@ -1,10 +1,12 @@
 // Selects element by class
 var timeEl = document.querySelector(".time");
+timeEl.textContent = "75 seconds to play."; 
 
 // Selects element by id
 var mainEl = document.getElementById("main");
 
 var startButton = document.querySelector("#start");
+startButton.setAttribute("style", "height: 25px; width:100px; background-color: cyan")
 
 var secondsLeft = 75;
 
@@ -14,12 +16,9 @@ var question2Segment = document.createElement("div")
 var question3Segment = document.createElement("div")
 var question4Segment = document.createElement("div")
 
-var leaderboardArrayLS = localStorage.getItem("leaderboardArrayLS");
-
 //declares an array for the leaderboard 
 var leaderboardArray = [];
-
-var nameLS = localStorage.getItem("name");
+leaderboardArray = JSON.parse(localStorage.getItem("leaderboard")); //calls the information stored in local storage
 
 //declare object for question 1
 var question1 = {
@@ -356,72 +355,70 @@ function endGame() {
     }
 
     //add new name to leaderboard
-    addNewName();
-
-
-   // var newName = prompt("What is your name?");
-
-    // var leaderboard = leaderboardSegmentLocal.concat(newName);
-
-
-    //IDEA FOR LEADERBOARD -- WE NEED TO MAKE AN ARRAY THAT IS IN LOCAL STORAGE, USE THE .SORT() METHOD ON THAT ARRAY, THEN DISPLAY THAT ARRAY
-
-    // localStorage.setItem("leaderboardSegment", JSON.stringify(leaderboard));
-
-    // mainEl.appendChild(localStorage.getItem(JSON.parse(leaderboardSegment)));
-
-}
-
-function addNewName() {
     var form = document.createElement("form");
     var input = document.createElement("input");
     input.setAttribute("type", "text");
     input.setAttribute("placeholder", "Insert your name here");
     var button = document.createElement("button");
+    button.setAttribute("style", "width: 100px; height: 25px; background-color:cyan");
+    button.textContent = "Enter name";
     form.appendChild(input);
-    button.setAttribute("style", "width: 50px", "height: 50px")
     form.appendChild(button);
     mainEl.appendChild(form);
 
     button.addEventListener("click", function(event) {
-        //insert code for how to handle the submission of material
+        //insert code for how to handle the submit button
+
+         //gets rid of the option to submit material
+        form.remove();
+
+        //creates a button that lets the user go back (refreshes the page so they can play again)
+        var goBackButton = document.createElement("button");
+        goBackButton.textContent = "Go back";
+        goBackButton.setAttribute("style", "font-color: red; width:100px; height:25px")
+        mainEl.appendChild(goBackButton);
+    
+        goBackButton.addEventListener("click", function() {
+            location.reload();
+        })
 
         event.preventDefault();
-        leaderboardArray
         var name = input.value;
 
         if (name === "") {
             window.alert("Name cannot be blank");
-        } else {
-            localStorage.setItem("name", name);
-            displayLeaderboard();
+        } 
+
+        var newLeaderboardEl = {secondsLeft, name}; //this is an object for a new leaderboard element that has the player's name and score
+
+
+        leaderboardArray.push(newLeaderboardEl); 
+
+        leaderboardArray.sort(function(x, y) {
+            return y.secondsLeft - x.secondsLeft;
+        });
+
+        // localStorage.getItem("leaderboard"); //is this even necessary, i called it earlier on in the code
+        localStorage.setItem("leaderboard", JSON.stringify(leaderboardArray)); //this saves the new leaderboardArray with the new player's information to localStorage for future access
+
+        var leaderboardHeader = document.createElement("h1");
+        leaderboardHeader.textContent= "Leaderboard for all players";
+        mainEl.appendChild(leaderboardHeader);
+
+        for (i = 0; i < leaderboardArray.length; i++) {
+            var leaderboardDiv = document.createElement("ol");
+            var leaderboardElement = document.createElement("li");
+            leaderboardDiv.appendChild(leaderboardElement);
+            mainEl.appendChild(leaderboardDiv);
+            leaderboardElement.textContent = (leaderboardArray[i].name + " -- " + leaderboardArray[i].secondsLeft); 
+            mainEl.appendChild(leaderboardElement);
         }
     })
-}
 
-function displayLeaderboard() {
-    var newElement = document.createElement("li");
-    newElement.textContent = localStorage.getItem("name") + " -- " + secondsLeft; //IS SECONDS LEFT A GLOBAL VARIABLE I THINK SO
-    leaderboardArray.push(newElement);
-    localStorage.setItem("leaderboardArrayLS", JSON.stringify(leaderboardArray)); //this adds the newest name we added to the array
-    leaderboardArray = JSON.parse(localStorage.getItem("leaderboardArrayLS")); //this pulls down AGAIN the full list of all names with new and old local storage
+    
 
-    for (i = 0; i < leaderboardArray.length; i++) {
-        var leaderboardElement = document.createElement("li");
-        leaderboardElement.textContent = leaderboardArray[i].value;
-        mainEl.appendChild(leaderboardElement);
-    }
+    //IDEA FOR LEADERBOARD -- WE NEED TO MAKE AN ARRAY THAT IS IN LOCAL STORAGE, USE THE .SORT() METHOD ON THAT ARRAY, THEN DISPLAY THAT ARRAY
 
-    var goBackButton = document.createElement("button");
-    mainEl.appendChild(goBackButton);
-
-    goBackButton.addEventListener("click", function() {
-        location.reload();
-    })
-
-//PULL DOWN FROM THE ARRAY AND PARSE IT (UNSTRINGIFY IT)
-//ORDER THAT LIST?
-//RUN A FOR LOOP FOR EACH NTH ELEMENT OF THAT ARRAY AND MAKE IT A LIST
 
 }
 
