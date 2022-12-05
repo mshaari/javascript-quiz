@@ -5,20 +5,33 @@ timeEl.textContent = "75 seconds to play.";
 // Selects element by id
 var mainEl = document.getElementById("main");
 
-var startButton = document.querySelector("#start");
-startButton.setAttribute("style", "height: 25px; width:100px; background-color: cyan")
+var introductionText = document.querySelector("#introduction-text");
 
-var secondsLeft = 75;
+var startButton = document.querySelector("#start");
+startButton.setAttribute("style", "height: 25px; width:100px; background-color: cyan");
+
+var secondsLeft =  7;
 
 //declare divs for each question
 var question1Segment = document.createElement("div")
+question1Segment.setAttribute("class", "questionSegment");
 var question2Segment = document.createElement("div")
+question2Segment.setAttribute("class", "questionSegment");
 var question3Segment = document.createElement("div")
+question3Segment.setAttribute("class", "questionSegment");
 var question4Segment = document.createElement("div")
+question4Segment.setAttribute("class", "questionSegment");
 
 //declares an array for the leaderboard 
 var leaderboardArray = [];
 leaderboardArray = JSON.parse(localStorage.getItem("leaderboard")); //calls the information stored in local storage
+
+if(leaderboardArray == null){
+    leaderboardArray = [];
+}
+
+//declare a variable for the number of questions correct
+var numberCorrect = 0;
 
 //declare object for question 1
 var question1 = {
@@ -43,7 +56,7 @@ var question3 = {
     option1: "numbers and strings",
     option2: "other arrays",
     option3: "booleans",
-    option4: "all of the above", //correct
+    option4: "all shown options are correct", //correct
 };
 
 var question4 = {
@@ -60,6 +73,7 @@ var question4 = {
 function playGame() {
     //removes start button from screen
     startButton.remove();
+    introductionText.remove();
 
 
     //THE BELOW CHUNK IS ALL FOR QUESTION 1
@@ -94,7 +108,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => { wrongAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question2Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question2Segment);
     });
     //when wrong answer clicked
     p1option2.addEventListener('click', function () {
@@ -104,16 +118,17 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question2Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question2Segment);
     });
     //when right answer clicked
     p1option3.addEventListener('click', function () {
+        numberCorrect ++;
         question1Segment.remove();
         var correctAnswerResponse = document.createElement("h2");
         correctAnswerResponse.textContent = "Correct answer";
         mainEl.appendChild(correctAnswerResponse);
         setTimeout(() => { correctAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question2Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question2Segment);
     });
     //when wrong answer clicked
     p1option4.addEventListener('click', function () {
@@ -123,7 +138,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question2Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question2Segment);
     });
 
 
@@ -161,16 +176,17 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question3Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question3Segment);
     });
     //when right answer clicked
     p1option2.addEventListener('click', function () {
+        numberCorrect ++;
         question2Segment.remove();
         var correctAnswerResponse = document.createElement("h2");
         correctAnswerResponse.textContent = "Correct answer";
         mainEl.appendChild(correctAnswerResponse);
         setTimeout(() => { correctAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question3Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question3Segment);
     });
     //when wrong answer clicked
     p1option3.addEventListener('click', function () {
@@ -180,7 +196,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000); //this adds 1.5 seconds between showing the user whether they got the question right or wrong and moving onto the next question
-        setTimeout(() => { mainEl.appendChild(question3Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question3Segment);
     });
     //when wrong answer clicked
     p1option4.addEventListener('click', function () {
@@ -190,7 +206,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question3Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question3Segment);
     });
 
 
@@ -226,7 +242,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question4Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question4Segment);
     });
     //when wrong answer clicked
     p1option2.addEventListener('click', function () {
@@ -236,7 +252,7 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question4Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question4Segment);
     });
     //when wrong answer clicked
     p1option3.addEventListener('click', function () {
@@ -246,16 +262,17 @@ function playGame() {
         wrongAnswerResponse.textContent = "Wrong answer";
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question4Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question4Segment);
     });
     //when right answer clicked
     p1option4.addEventListener('click', function () {
+        numberCorrect ++;
         question3Segment.remove();
         var correctAnswerResponse = document.createElement("h2");
         correctAnswerResponse.textContent = "Correct answer";
         mainEl.appendChild(correctAnswerResponse);
         setTimeout(() => { correctAnswerResponse.remove(); }, 1000);
-        setTimeout(() => { mainEl.appendChild(question4Segment); }, 1000); //this opens up the next question
+        mainEl.appendChild(question4Segment);
     });
 
 
@@ -294,6 +311,7 @@ function playGame() {
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
         setTimeout(() => {endGame(); }, 1000); //this opens up the next question
+        clearInterval(timerInterval); //this is important so that the timer stops once they answer the last question (since the timer is their score and we wouldn't want that to keep running)
     });
     //when wrong answer clicked
     p1option2.addEventListener('click', function () {
@@ -304,15 +322,18 @@ function playGame() {
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
         setTimeout(() => {endGame(); }, 1000); //this opens up the next question
+        clearInterval(timerInterval);
     });
     //when right answer clicked
     p1option3.addEventListener('click', function () {
+        numberCorrect ++;
         question4Segment.remove();
         var correctAnswerResponse = document.createElement("h2");
         correctAnswerResponse.textContent = "Correct answer";
         mainEl.appendChild(correctAnswerResponse);
         setTimeout(() => { correctAnswerResponse.remove(); }, 1000);
         setTimeout(() => { endGame(); }, 1000);
+        clearInterval(timerInterval);
     });
     //when wrong answer clicked
     p1option4.addEventListener('click', function () {
@@ -323,20 +344,19 @@ function playGame() {
         mainEl.appendChild(wrongAnswerResponse);
         setTimeout(() => {wrongAnswerResponse.remove(); }, 1000);
         setTimeout(() => {endGame(); }, 1000); //this opens up the next question
+        clearInterval(timerInterval);
     });
 
-
-
+    
     var timerInterval = setInterval(function () {
-        secondsLeft--;
-        timeEl.textContent = secondsLeft + " seconds remaining.";
-
-        if (secondsLeft <= 0 && endGame.called===false) { //THE endGame.called===false makes sure that it doesn't recall the endGame function if its already been called if the user already answered all questions since that would have already called the endGame function
-            // Stops execution of action at set interval
+        if (secondsLeft > 0) {
+            secondsLeft --;
+            timeEl.textContent = secondsLeft + " seconds remaining.";
+        } else {
             clearInterval(timerInterval);
-            endGame(); //NEED TO FIX SOMETHING HERE: THIS EXECUTES EVEN IF THE GAME ALREADY ENDED
+            endGame();
         }
-
+        
     }, 1000);
 }
 
@@ -344,15 +364,28 @@ function playGame() {
 function endGame() {
     timeEl.remove(); //gets rid of timer
 
+   
+    question1Segment.remove();
+    question2Segment.remove();
+    question3Segment.remove();
+    question4Segment.remove();
+
     var endText = document.createElement("h2");
 
-    if (secondsLeft > 0) {
-        endText.textContent = 'Game over! Your final score is ' + secondsLeft + '.';
-        mainEl.appendChild(endText);
-    } else if (secondsLeft <= 0) {
+
+    if (numberCorrect=0) { //this is because we don't want to give them a score that's high if they just sped through and got everything wrong - if they got all wrong, no matter what they should have a final score of 0
         endText.textContent = 'Game over! Your final score is 0.';
         mainEl.appendChild(endText);
+        secondsLeft = 0;
+    } else if (secondsLeft<0) {
+        endText.textContent = 'Game over! Your final score is 0.';
+        mainEl.appendChild(endText);
+        secondsLeft = 0;
+    } else {
+        endText.textContent = 'Game over! Your final score is ' + secondsLeft + '.';
+        mainEl.appendChild(endText);
     }
+
 
     //add new name to leaderboard
     var form = document.createElement("form");
@@ -398,7 +431,6 @@ function endGame() {
             return y.secondsLeft - x.secondsLeft;
         });
 
-        // localStorage.getItem("leaderboard"); //is this even necessary, i called it earlier on in the code
         localStorage.setItem("leaderboard", JSON.stringify(leaderboardArray)); //this saves the new leaderboardArray with the new player's information to localStorage for future access
 
         var leaderboardHeader = document.createElement("h1");
@@ -414,12 +446,6 @@ function endGame() {
             mainEl.appendChild(leaderboardElement);
         }
     })
-
-    
-
-    //IDEA FOR LEADERBOARD -- WE NEED TO MAKE AN ARRAY THAT IS IN LOCAL STORAGE, USE THE .SORT() METHOD ON THAT ARRAY, THEN DISPLAY THAT ARRAY
-
-
 }
 
 startButton.addEventListener('click', playGame);

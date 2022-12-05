@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="Assets/style.css">
     <title>Coding Quiz</title>
 </head>
-<body>  
-    <h2 class="time" style="text-align:right;"></h2>
+
+<body>
+    <h2 class="time"></h2>
+    <div id="introduction-text">
+        <h3>Welcome to the JavaScript Quiz</h3>
+        <p>The JavaScript Quiz is a simple way to test your understanding of JavaScript with four questions. Once you hit start, your 75 second timer to play will begin. You will be prompted with four multiple choice options per question with one correct answer. If you get a question correct, you will proceed to the next question or the game will end if you are on the last question. If you get a question incorrect, 15 seconds will be deducted from your timer. Your final score for the game will be the number of seconds remaining. If you run out of time, your score is 0 and the game ends. <br> <br> You will then be redirected to a leaderboard page where you can type your name then your name and score will be recorded onto a leaderboard sorted from highest to lowest scores. Even if you refresh the page, the leaderboard will remain unchanged. <br> </p>
+
+    </div>
     <div id="main"></div>
-    <button id="start">Start Quiz</button>
+    <button id="start" style="margin-top: 20px;">Start Quiz</button>
     <script src="Assets/script.js"></script>
 </body>
+
 </html>
