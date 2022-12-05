@@ -10,7 +10,7 @@ var introductionText = document.querySelector("#introduction-text");
 var startButton = document.querySelector("#start");
 startButton.setAttribute("style", "height: 25px; width:100px; background-color: cyan");
 
-var secondsLeft =  7;
+var secondsLeft =  75;
 
 //declare divs for each question
 var question1Segment = document.createElement("div")
