@@ -1,14 +1,28 @@
+/* All elements have background color of lavender and font family given */
 * {
     background-color: lavender;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+/* Elements with class="time" are text-align center */
+
 .time {
     text-align: center;
 }
 
+/* Elements with id="class" has height of 25px, width of 100px, and background-color cyan */
 #start {
     height: 25px; 
     width:100px; 
     background-color: cyan
+}
+
+/* Buttons have rounded edges */
+button {
+    border-radius: 10px;
+}
+
+/* Whenever buttons on the questions are hovered, they change color to add interactivity */
+button:hover {
+    background-color: paleturquoise;
 }
